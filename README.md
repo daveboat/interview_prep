@@ -13,5 +13,5 @@ Node that the career/behavioural document doesn't contain my answers, since thos
 prepared a review of my past work experience, but won't be sharing this document since it also contains personal 
 information.
 
-Refer to my [blog post](https://daveboat.github.io) where I discuss my thoughts on the interview process and my 
-preparation work.
+Also refer to my [blog post](https://daveboat.github.io/blogs/2020/08/14/my-big-tech-interview-experience/) where I discuss my thoughts on the interview process and my 
+preparation work in more detail.
