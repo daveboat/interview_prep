@@ -295,7 +295,7 @@ Transfer learning, broadly, is when a model trained on one task is used as the s
 
 In CV, this usually means using the weights from a model trained on a general dataset and finetuning it for a smaller, more specific dataset. The idea is that the feature extractor learned by the lower layers allows the model to generalize better than the feature extractor trained on only a small, specific dataset.
 
-Would it be preferable to use the entire batch at once for gradient descent if we could?
+### Would it be preferable to use the entire batch at once for gradient descent if we could?
 
 The loss functions we deal with in deep learning are typically non-convex, and we are more likely to reach an undesirable minimum with full-batch gradient descent. The minimum we want should have a small loss, but should also be "smooth", or low curvature, around the minimum. Large batch sizes have been shown to produce "sharper" minima. The gradient computed from mini-batch gradient descent can be thought of as the full-batch gradient plus noise, which is thought to push the optimizer out of "sharp" minima and into "flat" minima where noise will not push the optimizer out of the minimum.
 
