@@ -1,8 +1,26 @@
 """
-Leetcode 41: first missing positive. For an array of integers, find the first missing positive integer, with a solution
-that's O(N) in time and O(1) in space
+Leetcode 41 - First missing positive.
 
-This is a very contrived problem, the solution only works because we're looking for positive missing numbers
+Given an unsorted integer array, find the smallest missing positive integer.
+
+Example 1:
+
+Input: [1,2,0]
+Output: 3
+
+Example 2:
+
+Input: [3,4,-1,1]
+Output: 2
+
+Example 3:
+
+Input: [7,8,9,11,12]
+Output: 1
+
+Follow up:
+
+Your algorithm should run in O(n) time and uses constant extra space.
 """
 
 
@@ -12,35 +30,35 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        # the key is that we can only use constant extra space. This basically puts us in a territory where we must
-        # somehow use the source array itself to mark our data somehow.
+        # using constant extra space implies we must use the array itself to keep track of which numbers are
+        # there. Because nums is of length N, if there are no missing positive integers less than N, all of
+        # the integers from 1 to N must be in the array, and the first missing one must be N+1
+        #
+        # so we go through the array, marking index i-1 if the number i shows up by turning it negative.
+        # in a second pass through the array, we check for positive numbers. if everything is negative, N+1
+        # must be the missing number
+        #
+        # our strategy is messed up by the presence of zero and negative numbers, so we first do a preprocessing
+        # pass by setting zero and negative numbers to the value N+1, which doesn't affect our following passes
 
-        # first, see if 1 is in the array. if it isn't, return 1. For every other element, if it's greater than
-        # len(nums), or less than 1, set it to 1
-        one_found = False
-        l = len(nums)
-        for i in range(l):
-            if nums[i] == 1:
-                one_found = True
-            elif nums[i] < 1 or nums[i] > l:
-                nums[i] = 1
+        N = len(nums)
 
-        # if we couldn't find a true 1, we have the answer
-        if not one_found:
-            return 1
+        # pass 1: set n <= 0 to N+1
+        for i in range(N):
+            if nums[i] <= 0:
+                nums[i] = N + 1
 
-        # now, go through the array again (we're at O(2N) now), setting the index of the absolute value of the element
-        # negative. This marks whether or not we've seen a number between 1 and l
-        for i in range(l):
-            idx = abs(nums[i]) - 1
+        # pass 2: mark array for numbers between 1 and N. take absolute value so numbers we've already marked as
+        # negative get mapped to a positive index
+        for i in range(N):
+            if 0 < abs(nums[i]) <= N:
+                if nums[abs(nums[i]) - 1] > 0:
+                    nums[abs(nums[i]) - 1] *= -1
 
-            if nums[idx] > 0:
-                nums[idx] *= -1
-
-        # finally, loop through the list until we find our first nonnegative number, and return that index + 1
-        for i in range(l):
+        # pass 3: seek the first positive number
+        for i in range(N):
             if nums[i] > 0:
                 return i + 1
 
-        # if our entire array is negative, then the number must be one greater than the number of elements in the array
-        return l + 1
+        # return N+1 if we finished the previous loop without returning
+        return N + 1
