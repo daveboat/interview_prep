@@ -32,27 +32,23 @@ class Solution(object):
         :type n: int
         :rtype: bool
         """
-        # iterate through the array. If we see a 1, increment by 2. If we see a zero, and the next plot is also a zero
-        # (since we either skipped past or moved from a zero -- we must have since the existing array obeys the no two
-        # flowers can be planted beside each other rule)
-        #
-        # then increment our count of possible plantings by 1, and skip ahead by 2 again
-        # otherwise, increment our index by 1
+        # we iterate through flowerbed. when we encounter a 1, we increment our index by 2.
+        # when we encounter a 0, we check if the next spot is either out of the array or a 0. if so
+        # we add 1 to flowers and increment our counter by 2
+        # otherwise (if next spot is a 1) we increment our counter by 1
 
-        N = len(flowerbed)
-        counter = 0
-        possible_flowers = 0
+        flowers = 0
+        i = 0
+        while i < len(flowerbed):
+            if flowerbed[i] == 1:
+                i += 2
+            elif flowerbed[i] == 0:
+                if i == len(flowerbed) - 1 or flowerbed[i + 1] == 0:
+                    flowers += 1
+                    if flowers == n:
+                        return True
+                    i += 2
+                else:
+                    i += 1
 
-        while counter <= N - 1:
-            if flowerbed[counter] == 1:
-                counter += 2
-            elif counter == N - 1 or flowerbed[counter + 1] == 0:
-                possible_flowers += 1
-                counter += 2
-            else:
-                counter += 1
-
-            if possible_flowers >= n:
-                return True
-
-        return False
+        return True if flowers >= n else False

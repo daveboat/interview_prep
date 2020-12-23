@@ -1,4 +1,4 @@
-"""
+gma"""
 LC470 - Implement rand10() using rand7()
 
 Given the API rand7 which generates a uniform random integer in the range 1 to 7, write a function rand10 which
